@@ -13,6 +13,8 @@ import Header from '../Header'
 
 
 // $FlowIgnore
+import 'sanitize.css/sanitize.css'
+// $FlowIgnore
 import 'semantic-ui-css/semantic.min.css'
 
 // $FlowIgnore

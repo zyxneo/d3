@@ -42,8 +42,9 @@ class IndexPage extends React.Component<Props, State> {
 
   updateBar = () => {
     const { data } = this.state
+    const x = d3.scaleLinear().domain([0, d3.max(data)]).range([0, 500])
 
-    const bars = d3.select('.simple-bar-chart')
+    const bars = d3.select('.bar-chart')
       .selectAll('div')
       .data(data)
 
@@ -51,19 +52,19 @@ class IndexPage extends React.Component<Props, State> {
       .duration(1000)
       .ease(d3.easeExpInOut)
       .delay((d, i) => i * 200)
-      .style('width', d => `${d}px`)
+      .style('width', d => `${x(d)}px`)
       .text(d => d)
 
     bars.enter().append('div')
-    .classed('bar', true)
-      .style('width', d => `${d}px`)
+      .classed('bar', true)
+      .style('width', d => `${x(d)}px`)
       .text(d => d)
 
     bars.exit().remove()
   }
 
   randomize = () => {
-    const newData = d3.range(6).map(() => Math.round(Math.random() * 500))
+    const newData = d3.range(6).map(() => Math.round(Math.random() * 2000))
 
     this.setState({
       data: newData,
@@ -73,7 +74,10 @@ class IndexPage extends React.Component<Props, State> {
   render() {
     return (
       <Layout>
-        <div className="simple-bar-chart" />
+        <div className="simple-bar-chart">
+          <div className="bar-chart" />
+        </div>
+
         <Button
           animated="fade"
           primary
