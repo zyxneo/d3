@@ -1,0 +1,15 @@
+@import "../components/variables.scss";
+
+.simple-bar-chart {
+  background: $white;
+
+  .bar {
+    display: flex;
+    text-align: left;
+    justify-content: flex-end;
+    padding: 5px 10px;
+    margin: 1px 0;
+    background: $teal;
+    color: $white;
+  }
+}

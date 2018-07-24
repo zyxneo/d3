@@ -1,0 +1,26 @@
+[ignore]
+.*/.cache/*
+.*/node_modules/*
+.*/public/*
+.*/static/*
+
+[include]
+
+[libs]
+./flow-typed
+node_modules/iflow-react-intl/index.js.flow
+node_modules/iflow-react-router/index.js.flow
+
+[lints]
+
+all=error
+
+[options]
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+all=false
+emoji=true
+module.system=haste
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=./src
+
+[strict]
