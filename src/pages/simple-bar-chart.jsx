@@ -42,7 +42,12 @@ class IndexPage extends React.Component<Props, State> {
 
   updateBar = () => {
     const { data } = this.state
-    const x = d3.scaleLinear().domain([0, d3.max(data)]).range([0, 500])
+    const scale = d3.scaleLinear().domain([0, d3.max(data)]).range([0, 500])
+
+    const blue = d3.color('#0074D9')
+    const teal = d3.color('#39CCCC')
+    const green = d3.color('#2ECC40')
+    const color = d3.scaleLinear().domain([0, d3.max(data) / 2, d3.max(data)]).range([blue, teal, green])
 
     const bars = d3.select('.bar-chart')
       .selectAll('div')
@@ -52,12 +57,14 @@ class IndexPage extends React.Component<Props, State> {
       .duration(1000)
       .ease(d3.easeExpInOut)
       .delay((d, i) => i * 200)
-      .style('width', d => `${x(d)}px`)
+      .style('width', d => `${scale(d)}px`)
+      .style('background-color', d => color(d))
       .text(d => d)
 
     bars.enter().append('div')
       .classed('bar', true)
-      .style('width', d => `${x(d)}px`)
+      .style('width', d => `${scale(d)}px`)
+      .style('background-color', d => color(d))
       .text(d => d)
 
     bars.exit().remove()
