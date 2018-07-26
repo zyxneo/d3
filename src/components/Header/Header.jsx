@@ -19,6 +19,7 @@ const Header = () => (
           <Dropdown item text="Examples">
             <Dropdown.Menu>
               <Dropdown.Item  as={Link} to="/simple-bar-chart">simple-bar-chart</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/svg-bar-chart">svg-bar-chart</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
