@@ -3,10 +3,6 @@
 import React from 'react'
 import * as d3 from 'd3'
 // $FlowIgnore
-import {
-  Button,
-  Icon,
-} from 'semantic-ui-react'
 
 import Layout from '../components/Layout'
 // $FlowIgnore
@@ -27,9 +23,7 @@ class IndexPage extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    this.state = {
-      data: [4, 8, 15, 16, 23, 42],
-    }
+    this.state = {}
   }
 
   componentDidMount() {
@@ -41,40 +35,34 @@ class IndexPage extends React.Component<Props, State> {
   }
 
   updateBar = () => {
-    const { data } = this.state
-
     const width = 500
-    const barHeight = 20
+    const barHeight = 24
 
     const x = d3.scaleLinear()
-      .domain([0, d3.max(data)])
       .range([0, width])
 
     const chart = d3.select('.chart')
       .attr('width', width)
-      .attr('height', barHeight * data.length)
 
-    const bar = chart.selectAll('g')
-      .data(data)
-      .enter().append('g')
-      .attr('transform', (d, i) => `translate(0, ${i * barHeight})`)
+    d3.tsv('/db/data.tsv').then((data) => {
+      x.domain([0, Math.max(...data.map(d => d.value))])
 
-    bar.append('rect')
-      .attr('width', x)
-      .attr('height', barHeight - 1)
+      chart.attr('height', barHeight * data.length)
 
-    bar.append('text')
-      .attr('x', d => x(d) - 3)
-      .attr('y', barHeight / 2)
-      .attr('dy', '.35em')
-      .text(d => d)
-  }
+      const bar = chart.selectAll('g')
+        .data(data)
+        .enter().append('g')
+        .attr('transform', (d, i) => `translate(0,${i * barHeight})`)
 
-  randomize = () => {
-    const newData = d3.range(6).map(() => Math.round(Math.random() * 2000))
+      bar.append('rect')
+        .attr('width', d => x(d.value))
+        .attr('height', barHeight - 1)
 
-    this.setState({
-      data: newData,
+      bar.append('text')
+        .attr('x', d => x(d.value) - 3)
+        .attr('y', barHeight / 2)
+        .attr('dy', '.35em')
+        .text(d => d.value)
     })
   }
 
@@ -84,15 +72,6 @@ class IndexPage extends React.Component<Props, State> {
         <div className="svg-bar-chart">
           <svg className="chart" />
         </div>
-
-        <Button
-          animated="fade"
-          primary
-          onClick={this.randomize}
-        >
-          <Button.Content visible>Randomize</Button.Content>
-          <Button.Content hidden><Icon name="random" /></Button.Content>
-        </Button>
       </Layout>
     )
   }
