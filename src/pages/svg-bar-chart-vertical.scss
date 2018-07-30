@@ -1,0 +1,23 @@
+@import "../components/variables.scss";
+
+.svg-bar-chart-vertical {
+  background: $white;
+  overflow: hidden;
+  margin-bottom: 1em;
+
+  .chart {
+    box-shadow: 0 0 0 1px $grey;
+    margin: 1em auto;
+    display: block;
+  }
+
+  .chart rect {
+    fill: $teal;
+  }
+
+  .chart text {
+    fill: $black;
+    font: 10px sans-serif;
+    text-anchor: end;
+  }
+}

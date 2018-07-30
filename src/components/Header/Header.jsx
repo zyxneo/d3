@@ -20,6 +20,7 @@ const Header = () => (
             <Dropdown.Menu>
               <Dropdown.Item  as={Link} to="/simple-bar-chart">simple-bar-chart</Dropdown.Item>
               <Dropdown.Item  as={Link} to="/svg-bar-chart">svg-bar-chart</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/svg-bar-chart-vertical">svg-bar-chart-vertical</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
