@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/d3',
   siteMetadata: {
     title: 'Gatsby Default Starter',
   },

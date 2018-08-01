@@ -1,6 +1,9 @@
 // @flow
 
 import React from 'react'
+// $FlowIgnore
+import { withPrefix } from 'gatsby-link'
+// $FlowIgnore
 import * as d3 from 'd3'
 // $FlowIgnore
 
@@ -44,7 +47,7 @@ class IndexPage extends React.Component<Props, State> {
     const chart = d3.select('.chart')
       .attr('width', width)
 
-    d3.tsv('/db/data.tsv').then((data) => {
+    d3.tsv(withPrefix('/db/data.tsv')).then((data) => {
       x.domain([0, Math.max(...data.map(d => d.value))])
 
       chart.attr('height', barHeight * data.length)

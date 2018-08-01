@@ -1,8 +1,10 @@
 // @flow
 
 import React from 'react'
-import * as d3 from 'd3'
 // $FlowIgnore
+import { withPrefix } from 'gatsby-link'
+// $FlowIgnore
+import * as d3 from 'd3'
 
 import Layout from '../components/Layout'
 // $FlowIgnore
@@ -53,8 +55,8 @@ class IndexPage extends React.Component<Props, State> {
       .attr('width', width)
       .attr('height', height)
 
-    d3.tsv('/db/data-vertical.tsv').then((data) => {
-      x.domain([...data.map(d => d.letter)])
+    d3.tsv(withPrefix('/db/data-vertical.tsv')).then((data) => {
+      x.domain(data.map(d => d.letter))
       y.domain([0, Math.max(...data.map(d => d.frequency))])
 
       const bar = chart.selectAll('g')

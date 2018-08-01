@@ -1,0 +1,27 @@
+language: node_js
+notifications:
+  email:
+    recipients:
+      - zyxneo@gmail.com
+    on_success: always
+    on_failure: always
+node_js:
+  - "stable"
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  github-token: $GITHUB_TOKEN
+  local-dir: public
+  target-branch: gh-pages
+  on:
+    branch: dev
+script:
+  - "npm i -g gatsby"
+  - "npm i"
+
+after_success:
+  - "npm run deploy"

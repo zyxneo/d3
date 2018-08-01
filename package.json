@@ -6,8 +6,7 @@
   "dependencies": {
     "d3": "^5.5.0",
     "gatsby": "next",
-    "gatsby-image": "next",
-    "gatsby-link": "^1.6.45",
+    "gatsby-link": "next",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sass": "next",
     "gatsby-plugin-sharp": "next",
@@ -25,6 +24,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "fix": "eslint --fix --ext .js,.jsx src",
     "flow": "flow src",
