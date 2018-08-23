@@ -19,5 +19,30 @@
     fill: $black;
     font: 10px sans-serif;
     text-anchor: end;
+
+    &.upper {
+      fill: $teal;
+    }
+
+    &.lower {
+      fill: $white;
+    }
+  }
+
+  .axis text {
+    fill: $teal;
+  }
+
+  .axis.x text {
+    text-anchor: middle;
+    transform: translateY(5px);
+    font-weight: bold;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: $teal;
+    shape-rendering: crispEdges;
   }
 }
