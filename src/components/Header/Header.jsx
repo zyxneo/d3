@@ -1,12 +1,14 @@
 // @flow
 
 import React from 'react'
+// $FlowIgnore
 import Link from 'gatsby-link'
 
 import {
   Container,
   Dropdown,
   Menu,
+  // $FlowIgnore
 } from 'semantic-ui-react'
 
 const Header = () => (
@@ -21,6 +23,7 @@ const Header = () => (
               <Dropdown.Item  as={Link} to="/simple-bar-chart">simple-bar-chart</Dropdown.Item>
               <Dropdown.Item  as={Link} to="/svg-bar-chart">svg-bar-chart</Dropdown.Item>
               <Dropdown.Item  as={Link} to="/svg-bar-chart-vertical">svg-bar-chart-vertical</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/general-update-pattern">general-update-pattern</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>

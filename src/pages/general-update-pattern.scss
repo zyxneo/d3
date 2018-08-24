@@ -1,0 +1,21 @@
+@import "../components/variables.scss";
+
+.general-update-pattern {
+  background: $white;
+  overflow: hidden;
+  margin-bottom: 1em;
+
+  text {
+    font-weight: bold;
+    font-size: 48px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .enter {
+    fill: $green;
+  }
+
+  .update {
+    fill: $black;
+  }
+}
