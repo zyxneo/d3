@@ -1,0 +1,21 @@
+@import "../components/variables.scss";
+
+.nested-selections-table {
+  background: $white;
+  text-align: right;
+
+  td {
+    padding: 5px 10px;
+  }
+
+  td.selected,
+  tr.selected {
+    background: $lightRed;
+    color: $white;
+  }
+
+  .selected td.selected {
+    background: $red;
+    color: $white;
+  }
+}
