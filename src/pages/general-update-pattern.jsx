@@ -47,7 +47,7 @@ class IndexPage extends React.Component<Props, State> {
       // DATA JOIN
       // Join new data with old elements, if any.
       const text = g.selectAll('text')
-        .data(data)
+        .data(data, d => d)
 
       // UPDATE
       // Update old elements as needed.
@@ -61,10 +61,10 @@ class IndexPage extends React.Component<Props, State> {
       // apply operations to both.
       text.enter().append('text')
         .attr('class', 'enter')
-        .attr('x', (d, i) => i * 32)
         .attr('dy', '.35em')
-        .merge(text)
         .text(d => d)
+        .merge(text)
+        .attr('x', (d, i) => i * 32)
 
       // EXIT
       // Remove old elements as needed.
