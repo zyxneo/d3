@@ -25,6 +25,7 @@ const Header = () => (
               <Dropdown.Item  as={Link} to="/svg-bar-chart-vertical">svg-bar-chart-vertical</Dropdown.Item>
               <Dropdown.Item  as={Link} to="/general-update-pattern">general-update-pattern</Dropdown.Item>
               <Dropdown.Item  as={Link} to="/nested-selections">nested-selections</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/working-with-transitions">working-with-transitions</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
