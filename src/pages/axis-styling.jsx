@@ -21,13 +21,6 @@ class IndexPage extends React.Component<Props, State> {
 
   state: State
 
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      data: [30, 86, 168, 281, 303, 365],
-    }
-  }
-
   componentDidMount() {
     this.updateBar()
   }
@@ -37,6 +30,8 @@ class IndexPage extends React.Component<Props, State> {
   }
 
   updateBar = () => {
+    // example from https://bl.ocks.org/mbostock/3371592
+
     const svg = d3.select('.axis-styling svg')
     const margin = {
       top: 20,
@@ -65,29 +60,39 @@ class IndexPage extends React.Component<Props, State> {
 
     const yAxis = d3.axisRight(y)
       .tickSize(width)
-      .tickFormat((d) => {
+      .tickFormat((d, i) => {
         const s = formatNumber(d / 1e6)
-        // return this.parentNode.nextSibling ? `\xa0${s}` : `$${s} million`
+        return i === 10 ? `$${s} million` : `\xa0${s}`
       })
 
-    const customXAxis = () => g.call(xAxis).select('.domain').remove()
-    const customYAxis = () => g.call(yAxis).select('.domain').remove().selectAll('.tick:not(:first-of-type) line').attr('stroke', '#777').attr('stroke-dasharray', '2,2').selectAll('.tick text').attr('x', 4).attr('dy', -4)
-
-    g.append('g')
+    const xAxisG = g.append('g')
       .attr('class', 'x axis')
       .attr('transform', `translate(0, ${height})`)
-      .call(customXAxis)
+      .call(xAxis)
 
-    g.append('g')
+    xAxisG.select('.domain').remove()
+
+    const yAxisG = g.append('g')
       .attr('class', 'y axis')
-      .call(customYAxis)
+      .call(yAxis)
+
+    yAxisG.selectAll('.tick:not(:first-of-type) line')
+      .attr('stroke', '#777')
+      .attr('stroke-dasharray', '2,2')
+
+    yAxisG.selectAll('.tick text')
+      .attr('x', 4)
+      .attr('dy', -4)
+
+    yAxisG.select('path.domain')
+      .remove()
   }
 
   render() {
     return (
       <Layout>
         <div className="axis-styling">
-          <svg width="960" height="500" />
+          <svg width="960" height="500" style={{ display: 'block', margin: '0 auto' }} />
         </div>
       </Layout>
     )
