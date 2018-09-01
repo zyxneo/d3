@@ -60,9 +60,9 @@ class IndexPage extends React.Component<Props, State> {
 
     const yAxis = d3.axisRight(y)
       .tickSize(width)
-      .tickFormat((d, i) => {
-        const s = formatNumber(d / 1e6)
-        return i === 10 ? `$${s} million` : `\xa0${s}`
+      .tickFormat((data, index, array) => {
+        const s = formatNumber(data / 1e6)
+        return index === array.length - 1 ? `$${s} million` : `\xa0${s}`
       })
 
     const xAxisG = g.append('g')
@@ -72,20 +72,32 @@ class IndexPage extends React.Component<Props, State> {
 
     xAxisG.select('.domain').remove()
 
+    const customYAxis = (p) => {
+      const s = p.selection ? p.selection() : p
+      p.call(yAxis)
+      s.select('.domain')
+        .remove()
+      s.selectAll('.tick line')
+        .filter(Number)
+        .attr('stroke', '#777')
+        .attr('stroke-dasharray', '2,2')
+      s.selectAll('.tick text')
+        .attr('x', 4)
+        .attr('dy', -4)
+      if (s !== p) p.selectAll('.tick text').attrTween('x', null).attrTween('dy', null)
+    }
+
     const yAxisG = g.append('g')
       .attr('class', 'y axis')
-      .call(yAxis)
+      .call(customYAxis)
 
-    yAxisG.selectAll('.tick:not(:first-of-type) line')
-      .attr('stroke', '#777')
-      .attr('stroke-dasharray', '2,2')
 
-    yAxisG.selectAll('.tick text')
-      .attr('x', 4)
-      .attr('dy', -4)
-
-    yAxisG.select('path.domain')
-      .remove()
+    d3.timeout(() => {
+      y.domain([0, 4e6])
+      yAxisG.transition()
+        .duration(2500)
+        .call(customYAxis)
+    }, 1000)
   }
 
   render() {
