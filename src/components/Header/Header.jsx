@@ -27,6 +27,7 @@ const Header = () => (
               <Dropdown.Item  as={Link} to="/nested-selections">nested-selections</Dropdown.Item>
               <Dropdown.Item  as={Link} to="/working-with-transitions">working-with-transitions</Dropdown.Item>
               <Dropdown.Item  as={Link} to="/axis-styling">axis-styling</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/stacked-to-grouped-bars">stacked-to-grouped-bars</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
