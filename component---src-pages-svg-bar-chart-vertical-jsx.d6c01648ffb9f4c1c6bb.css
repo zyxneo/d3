@@ -1,0 +1,4 @@
+body{background:#ddd}
+.svg-bar-chart-vertical{background:#fff;margin-bottom:1em;overflow:hidden}.svg-bar-chart-vertical .chart{box-shadow:0 0 0 1px #ccc;display:block;margin:1em auto}.svg-bar-chart-vertical .chart rect{fill:#39cccc}.svg-bar-chart-vertical .chart text{fill:#191919;font:10px sans-serif;text-anchor:end}.svg-bar-chart-vertical .chart text.upper{fill:#39cccc}.svg-bar-chart-vertical .chart text.lower{fill:#fff}.svg-bar-chart-vertical .axis text{fill:#39cccc}.svg-bar-chart-vertical .axis.x text{font-weight:700;text-anchor:middle;transform:translateY(5px)}.svg-bar-chart-vertical .axis line,.svg-bar-chart-vertical .axis path{fill:none;shape-rendering:crispEdges;stroke:#39cccc}
+
+/*# sourceMappingURL=component---src-pages-svg-bar-chart-vertical-jsx.d6c01648ffb9f4c1c6bb.css.map*/
