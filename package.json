@@ -26,6 +26,7 @@
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
+    "start": "gatsby develop",
     "fix": "eslint --fix --ext .js,.jsx src",
     "flow": "flow src",
     "lint": "npm run flow",
