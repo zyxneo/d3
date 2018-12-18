@@ -5,6 +5,7 @@
 .*/static/*
 
 [include]
+/src
 
 [libs]
 ./flow-typed
