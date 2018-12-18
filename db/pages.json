@@ -1,0 +1,60 @@
+{
+  "pages": [
+    {
+      "id": "svg-bar-chart",
+      "header": "SVG bar chart",
+      "type": "tutorial",
+      "originalUrl": "https://bost.ocks.org/mike/bar/",
+      "description": "Bar chart tutorial updated fom version 3 with some additional style"
+    },
+    {
+      "id": "simple-bar-chart",
+      "header": "Simple bar chart",
+      "type": "tutorial",
+      "originalUrl": "https://bost.ocks.org/mike/bar/2/",
+      "description": "Bar chart tutorial updated fom version 3 with some additional style"
+    },
+    {
+      "id": "svg-bar-chart-vertical",
+      "header": "Vertical SVG bar chart",
+      "type": "tutorial",
+      "originalUrl": "https://bost.ocks.org/mike/bar/3/",
+      "description": "Bar chart tutorial updated fom version 3 with some additional style"
+    },
+    {
+      "id": "general-update-pattern",
+      "header": "General update pattern",
+      "type": "tutorial",
+      "originalUrl": "https://bl.ocks.org/mbostock/3808218",
+      "description": "This example demonstrates D3’s general update pattern, where a data-join is followed by operations on the enter, update and exit selections."
+    },
+    {
+      "id": "nested-selections",
+      "header": "Nested Selections",
+      "type": "tutorial",
+      "originalUrl": "https://bost.ocks.org/mike/nest/",
+      "description": "D3’s selections can be hierarchical, much like the elements and data they join."
+    },
+    {
+      "id": "axis-styling",
+      "header": "Axis Styling",
+      "type": "tutorial",
+      "originalUrl": "https://bl.ocks.org/mbostock/3371592",
+      "description": "This example shows how to customize the appearance of d3-axis using post-selection: modifying the contents of the SVG elements created by the axis."
+    },
+    {
+      "id": "stacked-to-grouped-bars",
+      "header": "Stacked to grouped bars",
+      "type": "example",
+      "originalUrl": "https://beta.observablehq.com/@mbostock/d3-stacked-to-grouped-bars",
+      "description": "Animations can preserve object constancy, allowing the reader to follow the data across views."
+    },
+    {
+      "id": "force-directed-graph",
+      "header": "Force-Directed Graph",
+      "type": "example",
+      "originalUrl": "https://bl.ocks.org/mbostock/f584aa36df54c451c94a9d0798caed35",
+      "description": "This example demonstrates a force-directed graph computed using d3-force."
+    }
+  ]
+}
