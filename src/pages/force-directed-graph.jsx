@@ -57,8 +57,15 @@ class IndexPage extends React.Component<Props> {
       }
 
       function drawNode(d) {
-        context.moveTo(d.x + 3, d.y)
-        context.arc(d.x, d.y, 3, 0, 2 * Math.PI)
+        const rad = 4
+        const maxWidth = 30
+        const textPadding = 6
+
+        context.moveTo(d.x + rad, d.y)
+        context.arc(d.x, d.y, rad, 0, 2 * Math.PI)
+
+        context.font = '10px sans-serif'
+        context.fillText(d.id, d.x + rad + textPadding, d.y + rad, maxWidth)
       }
 
       function ticked() {
@@ -68,13 +75,17 @@ class IndexPage extends React.Component<Props> {
 
         context.beginPath()
         graph.links.forEach(drawLink)
-        context.strokeStyle = '#aaa'
+        context.lineWidth = 0.5
+        context.strokeStyle = '#333'
+        context.setLineDash([2])
         context.stroke()
 
         context.beginPath()
         graph.nodes.forEach(drawNode)
         context.fill()
+        context.lineWidth = 2
         context.strokeStyle = '#fff'
+        context.setLineDash([])
         context.stroke()
 
         context.restore()
