@@ -34,7 +34,7 @@ const PageCard = ({
       <Card.Header>{header}</Card.Header>
       <Card.Meta>{type}</Card.Meta>
       {originalUrl && <a href={originalUrl}>source</a>}
-      {description && <Card.Description>{description}</Card.Description>}
+      {description && <Card.Description><div dangerouslySetInnerHTML={{ __html: description }} /></Card.Description>}
     </Card.Content>
     <Card.Content extra>
       <Link to={`/${id}`}>

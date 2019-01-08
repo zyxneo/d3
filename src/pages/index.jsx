@@ -5,7 +5,6 @@ import { Card } from 'semantic-ui-react'
 import Layout from '../components/Layout'
 import PageCard from '../components/PageCard'
 import pagesJson from '../../static/db/pages.json'
-// import Link from 'gatsby-link'
 
 
 const IndexPage = () => (
