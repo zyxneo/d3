@@ -1,0 +1,15 @@
+@import "../components/variables.scss";
+
+// Canvas tutorial
+#tutorial {
+  /*
+  If your renderings seem distorted,
+  try specifying your width and height attributes explicitly in the <canvas> attributes,
+  and not using CSS.
+
+  The <canvas> element can be styled just like any normal image (margin, border, background…).
+  These rules, however, don't affect the actual drawing on the canvas.
+
+  When no styling rules are applied to the canvas it will initially be fully transparent.
+  */
+}
