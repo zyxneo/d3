@@ -55,6 +55,13 @@
       "type": "example",
       "originalUrl": "https://bl.ocks.org/mbostock/f584aa36df54c451c94a9d0798caed35",
       "description": "This example demonstrates a force-directed graph computed using d3-force."
+    },
+    {
+      "id": "sxywu",
+      "header": "sxywu/react-d3-example",
+      "type": "example",
+      "originalUrl": "https://github.com/sxywu/react-d3-example",
+      "description": "*warning: these are <em>not</em> meant to be good examples of data visualizations, but just to show the possibility of using D3 and React*"
     }
   ]
 }
