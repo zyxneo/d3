@@ -1,0 +1,16 @@
+{
+  "nodes": [
+    {"id": "Node.A", "group": 1},
+    {"id": "Node.B", "group": 1, "color": "pink"},
+    {"id": "Node.C", "group": 2},
+    {"id": "Node.D", "group": 2},
+    {"id": "Node.E", "group": 2}
+  ],
+  "links": [
+    {"source": "Node.A", "target": "Node.C", "value": 1},
+    {"source": "Node.C", "target": "Node.B", "value": 2},
+    {"source": "Node.C", "target": "Node.D", "value": 2},
+    {"source": "Node.C", "target": "Node.E", "value": 3},
+    {"source": "Node.B", "target": "Node.E", "value": 2}
+  ]
+}
