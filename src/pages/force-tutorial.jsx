@@ -5,6 +5,7 @@ import React from 'react'
 import { withPrefix } from 'gatsby-link'
 // $FlowIgnore
 import * as d3 from 'd3'
+import drawArrow from '../utils/drawArrow'
 
 import Layout from '../components/Layout'
 
@@ -91,8 +92,18 @@ class IndexPage extends React.Component<Props> {
       }
 
       function drawLink(d) {
-        context.moveTo(d.source.x, d.source.y)
-        context.lineTo(d.target.x, d.target.y)
+        // https://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
+        const arrowObject = {
+          context,
+          fromX: d.source.x,
+          fromY: d.source.y,
+          toX: d.target.x,
+          toY: d.target.y,
+          headLength: 10,
+          offset: -10,
+        }
+
+        drawArrow(arrowObject)
       }
 
       function dragstarted() {
