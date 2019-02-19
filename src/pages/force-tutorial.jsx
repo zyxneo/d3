@@ -75,7 +75,7 @@ class IndexPage extends React.Component<Props> {
           y: 254.84573559959185
         }
         */
-
+        const color = d.color || '#333'
         context.save()
         context.beginPath()
         context.moveTo(d.x + rad, d.y)
@@ -83,7 +83,7 @@ class IndexPage extends React.Component<Props> {
 
         context.font = '10px sans-serif'
         context.fillText(d.id, d.x + rad + textPadding, d.y + rad)
-        context.fillStyle = selectedNode === d ? 'red' : '#333'
+        context.fillStyle = selectedNode === d ? '#FF4136' : color
         context.fill()
         context.strokeStyle = '#fff'
         context.lineWidth = 2

@@ -1,10 +1,10 @@
 {
   "nodes": [
-    {"id": "Node.A", "group": 1, "tooltip": "Lorem ipsum dolor sit amet consectetur adipisicing elit."},
-    {"id": "Node.B", "group": 1, "color": "pink", "tooltip": "Est doloribus, recusandae impedit ullam voluptatum adipisci eius distinctio eum quos quod dolor eveniet iure, dignissimos necessitatibus esse dolorem tempora modi!"},
-    {"id": "Node.C", "group": 2, "tooltip": "Quidem, nisi voluptas"},
-    {"id": "Node.D", "group": 2, "tooltip": "Cum quam quo similique nam eveniet aspernatur nihil in hic rem a"},
-    {"id": "Node.E", "group": 2, "tooltip": "Ducimus commodi est fuga laboriosam ullam"},
+    {"id": "Node.A", "group": 1, "color": "#39CCCC", "tooltip": "Lorem ipsum dolor sit amet consectetur adipisicing elit."},
+    {"id": "Node.B", "group": 1, "color": "#0074D9", "tooltip": "Est doloribus, recusandae impedit ullam voluptatum adipisci eius distinctio eum quos quod dolor eveniet iure, dignissimos necessitatibus esse dolorem tempora modi!"},
+    {"id": "Node.C", "group": 2, "color": "#2ECC40", "tooltip": "Quidem, nisi voluptas"},
+    {"id": "Node.D", "group": 2, "color": "#FF851B", "tooltip": "Cum quam quo similique nam eveniet aspernatur nihil in hic rem a"},
+    {"id": "Node.E", "group": 2, "color": "#D9499A", "tooltip": "Ducimus commodi est fuga laboriosam ullam"},
     {"id": "Alex (Aleks)", "group": 3, "tooltip": "text for Alex"},
     {"id": "Aleksander", "group": 3, "tooltip": "text for Aleksander"},
     {"id": "Aleksandra", "group": 3, "tooltip": "text for Aleksandra"},
