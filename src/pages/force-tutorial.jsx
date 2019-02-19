@@ -50,6 +50,8 @@ class IndexPage extends React.Component<Props> {
       const radiusRatio = maxRadius / maxValue
 
       let selectedNode
+      const rad = 8
+      const textPadding = 6
 
       function drawNode(d) {
         // called on node moveing
@@ -73,8 +75,6 @@ class IndexPage extends React.Component<Props> {
           y: 254.84573559959185
         }
         */
-        const rad = 8
-        const textPadding = 6
 
         context.save()
         context.beginPath()
@@ -89,6 +89,16 @@ class IndexPage extends React.Component<Props> {
         context.lineWidth = 2
         context.stroke()
         context.restore()
+      }
+
+      function drawTooltip(d) {
+        if (selectedNode === d && d.tooltip) {
+          const textMeasurements = context.measureText(d.tooltip) // TextMetrics object
+          context.fillStyle = '#fff'
+          context.fillRect(d.x + rad, d.y - rad - 10, textMeasurements.width + 10, 12)
+          context.fillStyle = '#333'
+          context.fillText(d.tooltip, d.x + rad + textPadding, d.y - rad)
+        }
       }
 
       function drawLink(d) {
@@ -192,6 +202,7 @@ class IndexPage extends React.Component<Props> {
         // drawing node with white border
         context.beginPath()
         data.nodes.forEach(drawNode)
+        data.nodes.forEach(drawTooltip)
 
         context.restore()
       }

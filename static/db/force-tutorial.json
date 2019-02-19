@@ -1,17 +1,17 @@
 {
   "nodes": [
-    {"id": "Node.A", "group": 1},
-    {"id": "Node.B", "group": 1, "color": "pink"},
-    {"id": "Node.C", "group": 2},
-    {"id": "Node.D", "group": 2},
-    {"id": "Node.E", "group": 2},
-    {"id": "Alex (Aleks)", "group": 3},
-    {"id": "Aleksander", "group": 3},
-    {"id": "Aleksandra", "group": 3},
-    {"id": "Sandra", "group": 3},
-    {"id": "Sándor", "group": 3},
-    {"id": "Sándóra", "group": 3},
-    {"id": "Dóra", "group": 3}
+    {"id": "Node.A", "group": 1, "tooltip": "Lorem ipsum dolor sit amet consectetur adipisicing elit."},
+    {"id": "Node.B", "group": 1, "color": "pink", "tooltip": "Est doloribus, recusandae impedit ullam voluptatum adipisci eius distinctio eum quos quod dolor eveniet iure, dignissimos necessitatibus esse dolorem tempora modi!"},
+    {"id": "Node.C", "group": 2, "tooltip": "Quidem, nisi voluptas"},
+    {"id": "Node.D", "group": 2, "tooltip": "Cum quam quo similique nam eveniet aspernatur nihil in hic rem a"},
+    {"id": "Node.E", "group": 2, "tooltip": "Ducimus commodi est fuga laboriosam ullam"},
+    {"id": "Alex (Aleks)", "group": 3, "tooltip": "text for Alex"},
+    {"id": "Aleksander", "group": 3, "tooltip": "text for Aleksander"},
+    {"id": "Aleksandra", "group": 3, "tooltip": "text for Aleksandra"},
+    {"id": "Sandra", "group": 3, "tooltip": "text for Sandra"},
+    {"id": "Sándor", "group": 3, "tooltip": "text for Sándor"},
+    {"id": "Sándóra", "group": 3, "tooltip": "text for Sándóra"},
+    {"id": "Dóra", "group": 3, "tooltip": "text for Dóra"}
   ],
   "links": [
     {"source": "Node.A", "target": "Node.C", "value": 1},
