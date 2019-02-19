@@ -92,18 +92,47 @@ class IndexPage extends React.Component<Props> {
       }
 
       function drawLink(d) {
+        context.save()
+        context.beginPath()
+        // setting default style
+        // drawing white link
+        context.lineWidth = 6
+        context.strokeStyle = '#fff'
         // https://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
-        const arrowObject = {
-          context,
-          fromX: d.source.x,
-          fromY: d.source.y,
-          toX: d.target.x,
-          toY: d.target.y,
-          headLength: 10,
-          offset: -10,
-        }
+        if (d.type === 'translation') {
+          context.moveTo(d.source.x, d.source.y)
+          context.lineTo(d.target.x, d.target.y)
+          context.stroke()
 
-        drawArrow(arrowObject)
+          // drawing purple dotted link to the top
+          context.beginPath()
+          context.setLineDash([3])
+          context.strokeStyle = 'purple'
+          context.lineWidth = 1
+          context.moveTo(d.source.x, d.source.y)
+          context.lineTo(d.target.x, d.target.y)
+        } else {
+          const arrowObject = {
+            context,
+            fromX: d.source.x,
+            fromY: d.source.y,
+            toX: d.target.x,
+            toY: d.target.y,
+            headLength: 10,
+            offset: -10,
+          }
+          drawArrow(arrowObject)
+          context.stroke()
+
+          // drawing black link to the top
+          context.beginPath()
+          context.lineWidth = 0.5
+          context.strokeStyle = '#333'
+          drawArrow(arrowObject)
+        }
+        context.stroke()
+        context.restore()
+        context.setLineDash([])
       }
 
       function dragstarted() {
@@ -157,22 +186,8 @@ class IndexPage extends React.Component<Props> {
         context.clearRect(0, 0, width, height)
         context.save()
 
-        // setting default style
-        context.strokeStyle = '#fff'
-        context.fillStyle = '#333'
 
-        // drawing white link
-        context.beginPath()
         data.links.forEach(drawLink)
-        context.lineWidth = 6
-        context.stroke()
-
-        // drawing black link to the top
-        context.beginPath()
-        data.links.forEach(drawLink)
-        context.lineWidth = 0.5
-        context.strokeStyle = '#333'
-        context.stroke()
 
         // drawing node with white border
         context.beginPath()

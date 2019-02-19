@@ -4,13 +4,29 @@
     {"id": "Node.B", "group": 1, "color": "pink"},
     {"id": "Node.C", "group": 2},
     {"id": "Node.D", "group": 2},
-    {"id": "Node.E", "group": 2}
+    {"id": "Node.E", "group": 2},
+    {"id": "Alex (Aleks)", "group": 3},
+    {"id": "Aleksander", "group": 3},
+    {"id": "Aleksandra", "group": 3},
+    {"id": "Sandra", "group": 3},
+    {"id": "Sándor", "group": 3},
+    {"id": "Sándóra", "group": 3},
+    {"id": "Dóra", "group": 3}
   ],
   "links": [
     {"source": "Node.A", "target": "Node.C", "value": 1},
     {"source": "Node.C", "target": "Node.B", "value": 2},
     {"source": "Node.C", "target": "Node.D", "value": 2},
     {"source": "Node.C", "target": "Node.E", "value": 3},
-    {"source": "Node.B", "target": "Node.E", "value": 2}
+    {"source": "Node.B", "target": "Node.E", "value": 2},
+    {"source": "Alex (Aleks)", "target": "Aleksander", "value": 2, "type": "transformation"},
+    {"source": "Aleksander", "target": "Aleksandra", "value": 1, "type": "gender"},
+    {"source": "Aleksander", "target": "Sándor", "value": 2, "type": "translation"},
+    {"source": "Aleksandra", "target": "Sandra", "value": 1, "type": "transformation"},
+    {"source": "Aleksandra", "target": "Sándóra", "value": 2, "type": "translation"},
+    {"source": "Sandra", "target": "Dóra", "value": 2, "type": "translation"},
+    {"source": "Alex (Aleks)", "target": "Sándor", "value": 2, "type": "translation"},
+    {"source": "Sándor", "target": "Sándóra", "value": 1, "type": "gender"},
+    {"source": "Sándóra", "target": "Dóra", "value": 1, "type": "transformation"}
   ]
 }
