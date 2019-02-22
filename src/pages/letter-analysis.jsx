@@ -12,20 +12,21 @@ type Props = {}
 
 type Node = {
   id: string,
-  group: number,
+  count: number,
 }
 
 type Link = {
   source: string,
   target: string,
-  value: number,
+  repetition: number,
 }
 
 type State = {
   text: string;
   data: {
     nodes: Array<Node>,
-    links: Array<Link>
+    links: Array<Link>,
+    maxCount: number,
   };
 }
 
@@ -65,6 +66,8 @@ class IndexPage extends React.Component<Props, State> {
     const data = {
       nodes: [],
       links: [],
+      maxCount: 0,
+      maxRepetition: 0,
     }
     letterArray.map((letter, i) => {
       // adding nodes
@@ -72,11 +75,13 @@ class IndexPage extends React.Component<Props, State> {
       data.nodes.map((node) => {
         if (node.id === letter) {
           nodeExist = true
-          return node.group += 1
+          // data.maxCount = Math.max(node.count += 1, data.maxCount)
+          // console.log(data.maxCount)
+          return [node.count += 1, data.maxCount = Math.max(node.count += 1, data.maxCount)]
         }
       })
       if (!nodeExist) {
-        data.nodes.push({ id: letter, group: 1 })
+        data.nodes.push({ id: letter, count: 1 })
       }
 
       // adding links
@@ -84,11 +89,11 @@ class IndexPage extends React.Component<Props, State> {
       data.links.map((link) => {
         if (link.source === letter && link.target === letterArray[i + 1]) {
           linkExist = true
-          return link.value += 1
+          return link.repetition += 1
         }
       })
       if (!linkExist && typeof letterArray[i + 1] !== 'undefined') {
-        data.links.push({ source: letter, target: letterArray[i + 1], value: 1 })
+        data.links.push({ source: letter, target: letterArray[i + 1], repetition: 1 })
       }
     })
 
@@ -112,6 +117,15 @@ class IndexPage extends React.Component<Props, State> {
       height,
     } = canvas
 
+    const { data } = this.state
+
+    const {
+      maxCount,
+    } = data
+
+    const maxRad = 30
+    const bezierControl = 8
+
     let selectedNode
 
     const simulation = d3.forceSimulation()
@@ -119,15 +133,24 @@ class IndexPage extends React.Component<Props, State> {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2))
 
-    const { data } = this.state
-
     function drawLink(d) {
       context.moveTo(d.source.x, d.source.y)
-      context.lineTo(d.target.x, d.target.y)
+
+      // bezier curve to target
+      const angle = Math.atan2(d.target.y - d.source.y, d.target.x - d.source.x)
+
+      const distanceX = d.target.x - d.source.x
+      const distanceY = d.target.y - d.source.y
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY) / 2
+
+      const controlX = d.target.x - distance * Math.cos(angle - Math.PI / bezierControl)
+      const controlY = d.target.y - distance * Math.sin(angle - Math.PI / bezierControl)
+      context.bezierCurveTo(d.source.x, d.source.y, controlX, controlY, d.target.x, d.target.y)
     }
 
+
     function drawNode(d) {
-      const rad = 4
+      const rad = maxRad / maxCount * d.count
       const maxWidth = 30
       const textPadding = 6
 
@@ -135,7 +158,6 @@ class IndexPage extends React.Component<Props, State> {
       context.beginPath()
       context.lineWidth = 2
       context.strokeStyle = '#fff'
-      context.setLineDash([])
       context.stroke()
       context.moveTo(d.x + rad, d.y)
       context.arc(d.x, d.y, rad, 0, 2 * Math.PI)
@@ -178,7 +200,6 @@ class IndexPage extends React.Component<Props, State> {
       data.links.forEach(drawLink)
       context.lineWidth = 0.5
       context.strokeStyle = '#333'
-      context.setLineDash([2])
       context.stroke()
 
       data.nodes.forEach(drawNode)
@@ -193,6 +214,7 @@ class IndexPage extends React.Component<Props, State> {
 
       simulation
         .force('link')
+        .distance(d => d.repetition * 50) // distance of the nodes
         .links(data.links)
 
       d3.select(canvas)
