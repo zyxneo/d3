@@ -2,9 +2,12 @@
 
 import React from 'react'
 // $FlowIgnore
-import { withPrefix } from 'gatsby-link'
-// $FlowIgnore
 import * as d3 from 'd3'
+import {
+  Header,
+  Form,
+  // $FlowIgnore
+} from 'semantic-ui-react'
 
 import Layout from '../components/Layout'
 
@@ -22,11 +25,11 @@ type Link = {
 }
 
 type State = {
-  text: string;
   data: {
-    nodes: Array<Node>,
-    links: Array<Link>,
+    nodes?: Array<Node>,
+    links?: Array<Link>,
     maxCount: number,
+    maxRepetition: number,
   };
 }
 
@@ -42,12 +45,11 @@ class IndexPage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      text: '',
-      data: {},
+      data: {
+        maxCount: 1,
+        maxRepetition: 0,
+      },
     }
-  }
-
-  componentDidMount() {
   }
 
   componentDidUpdate() {
@@ -55,19 +57,18 @@ class IndexPage extends React.Component<Props, State> {
   }
 
   handleChange(e:Event) {
-    this.setState({
-      text: e.target.value,
-    })
+    const text = e.target.value
+    this.analyze(text)
   }
 
-  analyze() {
-    const { text } = this.state
-    const letterArray = Array.from(text)
+  analyze(text) {
+    const trimmed = text.replace(/[\u00D8-\u024F]/g, '').replace(/ /g, '').toLowerCase()
+    const letterArray = Array.from(trimmed)
     const data = {
       nodes: [],
       links: [],
-      maxCount: 0,
-      maxRepetition: 0,
+      maxCount: 1,
+      maxRepetition: 1,
     }
     letterArray.map((letter, i) => {
       // adding nodes
@@ -75,8 +76,7 @@ class IndexPage extends React.Component<Props, State> {
       data.nodes.map((node) => {
         if (node.id === letter) {
           nodeExist = true
-          // data.maxCount = Math.max(node.count += 1, data.maxCount)
-          // console.log(data.maxCount)
+          /* eslint-disable no-return-assign, no-param-reassign */
           return [node.count += 1, data.maxCount = Math.max(node.count += 1, data.maxCount)]
         }
       })
@@ -89,12 +89,15 @@ class IndexPage extends React.Component<Props, State> {
       data.links.map((link) => {
         if (link.source === letter && link.target === letterArray[i + 1]) {
           linkExist = true
-          return link.repetition += 1
+          return [link.repetition += 1, data.maxRepetition = Math.max(link.repetition += 1, data.maxRepetition)]
+          /* eslint-enable no-return-assign, no-param-reassign */
         }
+        return null
       })
       if (!linkExist && typeof letterArray[i + 1] !== 'undefined') {
         data.links.push({ source: letter, target: letterArray[i + 1], repetition: 1 })
       }
+      return null
     })
 
     this.setState({
@@ -124,8 +127,8 @@ class IndexPage extends React.Component<Props, State> {
     } = data
 
     const maxRad = 30
+    const maxArea = maxRad * maxRad * Math.PI
     const bezierControl = 8
-
     let selectedNode
 
     const simulation = d3.forceSimulation()
@@ -133,40 +136,101 @@ class IndexPage extends React.Component<Props, State> {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2))
 
+    function getRadiusFromCount(count) {
+      const area = maxArea / maxCount * count
+      const rad = Math.sqrt(area / Math.PI)
+      return rad
+    }
+
+    function getAlpha(count) {
+      const alpha = 1 / data.maxRepetition * count
+      return alpha
+    }
+
+    function getCircleTangents({
+      cx,
+      cy,
+      radius,
+      px,
+      py,
+    }) {
+      // find tangents
+      const dx = cx - px
+      const dy = cy - py
+      const dd = Math.sqrt(dx * dx + dy * dy)
+      const a = Math.asin(radius / dd)
+      const b = Math.atan2(dy, dx)
+
+      const ta = { x: radius * Math.sin(b - a), y: radius * -Math.cos(b - a) }
+      const tb = { x: radius * -Math.sin(b + a), y: radius * Math.cos(b + a) }
+
+      return { ta, tb }
+    }
+
     function drawLink(d) {
-      context.moveTo(d.source.x, d.source.y)
+      context.save()
+      context.beginPath()
+      const targetNode = data.nodes.find(node => node.id === d.target.id)
+      const targetRadius = getRadiusFromCount(targetNode.count)
 
       // bezier curve to target
       const angle = Math.atan2(d.target.y - d.source.y, d.target.x - d.source.x)
 
       const distanceX = d.target.x - d.source.x
       const distanceY = d.target.y - d.source.y
-      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY) / 2
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
 
-      const controlX = d.target.x - distance * Math.cos(angle - Math.PI / bezierControl)
-      const controlY = d.target.y - distance * Math.sin(angle - Math.PI / bezierControl)
-      context.bezierCurveTo(d.source.x, d.source.y, controlX, controlY, d.target.x, d.target.y)
+      const controlX = d.target.x - distance / 2 * Math.cos(angle - Math.PI / bezierControl)
+      const controlY = d.target.y - distance / 2 * Math.sin(angle - Math.PI / bezierControl)
+
+      const control2X = d.target.x - distance / 2 * Math.cos(angle - Math.PI / (bezierControl + 1))
+      const control2Y = d.target.y - distance / 2 * Math.sin(angle - Math.PI / (bezierControl + 1))
+
+      const tangents = getCircleTangents({
+        cx: d.target.x,
+        cy: d.target.y,
+        radius: targetRadius,
+        px: d.source.x,
+        py: d.source.y,
+      })
+      // context.bezierCurveTo(d.source.x, d.source.y, controlX, controlY, d.target.x, d.target.y)
+
+      const frontX = d.target.x + targetRadius * Math.cos(angle - Math.PI)
+      const frontY = d.target.y + targetRadius * Math.sin(angle - Math.PI)
+
+      context.moveTo(d.target.x, d.target.y)
+      context.bezierCurveTo(frontX, frontY, control2X, control2Y, d.source.x, d.source.y)
+      context.bezierCurveTo(d.source.x, d.source.y, controlX, controlY, d.target.x + tangents.tb.x, d.target.y + tangents.tb.y)
+      context.moveTo(d.source.x, d.source.y)
+
+      context.save()
+      const lingrad = context.createLinearGradient(d.source.x, d.source.y, d.target.x, d.target.y)
+
+      const alpha = getAlpha(d.repetition)
+      lingrad.addColorStop(0, `rgba(0,0,255,${alpha})`)
+      lingrad.addColorStop(1, `rgba(255,0,0,${alpha})`)
+
+      context.fillStyle = lingrad
+      context.fill()
+      context.restore()
     }
 
-
     function drawNode(d) {
-      const rad = maxRad / maxCount * d.count
-      const maxWidth = 30
-      const textPadding = 6
+      const rad = getRadiusFromCount(d.count)
 
       context.save()
       context.beginPath()
-      context.lineWidth = 2
-      context.strokeStyle = '#fff'
-      context.stroke()
       context.moveTo(d.x + rad, d.y)
       context.arc(d.x, d.y, rad, 0, 2 * Math.PI)
 
-      context.font = '10px sans-serif'
-      context.fillText(d.id, d.x + rad + textPadding, d.y + rad, maxWidth)
       context.fillStyle = selectedNode === d ? 'red' : '#333'
       context.fill()
-      context.stroke()
+
+      context.fillStyle = '#fff'
+      context.textAlign = 'center'
+      context.textBaseline = 'middle'
+      context.font = `${1.3 * rad}px arial`
+      context.fillText(d.id, d.x, d.y)
       context.restore()
     }
 
@@ -198,9 +262,6 @@ class IndexPage extends React.Component<Props, State> {
 
       context.beginPath()
       data.links.forEach(drawLink)
-      context.lineWidth = 0.5
-      context.strokeStyle = '#333'
-      context.stroke()
 
       data.nodes.forEach(drawNode)
 
@@ -214,7 +275,7 @@ class IndexPage extends React.Component<Props, State> {
 
       simulation
         .force('link')
-        .distance(d => d.repetition * 50) // distance of the nodes
+        .distance(d => 1 / d.repetition * 300) // distance of the nodes
         .links(data.links)
 
       d3.select(canvas)
@@ -228,19 +289,18 @@ class IndexPage extends React.Component<Props, State> {
   }
 
   render() {
-    const { data } = this.state
     return (
       <Layout>
-        <textarea
-          onChange={this.handleChange}
-        />
-        <button
-          onClick={this.analyze}
-          type="button"
-        >
-          Analyze
-        </button>
-        { data.a }
+        <Header>
+          Letter analyzer
+        </Header>
+        <p>This example takes any string as input, but only latinic caracters will be taken to account. The graph displays the order of the letters, so that character X was followed by character Y. The handling of the repetitions and the bi-directional links are made with custom functions.</p>
+        <Form>
+          <Form.TextArea
+            onChange={this.handleChange}
+            placeholder="Paste or type some text here"
+          />
+        </Form>
         <canvas
           className="letter-analysis"
           width="960"
