@@ -62,6 +62,18 @@
       "type": "example",
       "originalUrl": "https://github.com/sxywu/react-d3-example",
       "description": "*warning: these are <em>not</em> meant to be good examples of data visualizations, but just to show the possibility of using D3 and React*"
+    },
+    {
+      "id": "force-tutorial",
+      "header": "Force tutorial",
+      "type": "experiment",
+      "description": "Erperiments with the force-directed-graph. Nodes can be clicked, additional info will be displayed. Links are represented as arrow, to differentiate the direction of relations"
+    },
+    {
+      "id": "letter-analysis",
+      "header": "Letter analysis",
+      "type": "experiment",
+      "description": "This example takes any string as input, but only latinic caracters will be taken to account. The graph displays the order of the letters, so that character X was followed by character Y. The handling of the repetitions and the bi-directional links are made with custom functions."
     }
   ]
 }
